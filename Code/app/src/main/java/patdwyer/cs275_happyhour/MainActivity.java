@@ -2,6 +2,7 @@ package patdwyer.cs275_happyhour;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -16,9 +17,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GetBarsTask gbt = new GetBarsTask(bars);
-        gbt.execute();
+        BarListAdapter adapter = new BarListAdapter(this, R.layout.list_item, bars);
 
+        GetBarsTask gbt = new GetBarsTask(bars, adapter);
+
+        ListView l = (ListView) findViewById(R.id.listView);
+        l.setAdapter(adapter);
+
+        gbt.execute();
 
     }
 

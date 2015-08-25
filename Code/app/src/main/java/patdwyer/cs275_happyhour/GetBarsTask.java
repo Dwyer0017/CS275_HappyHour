@@ -19,9 +19,11 @@ public class GetBarsTask extends AsyncTask<Void, Void, Void> {
     private static final String TOKEN_SECRET = "OFwyoaEBE37XPCwC7eqRrITspH4";
 
     private ArrayList<Bar> bars;
+    private BarListAdapter adapter;
 
-    public GetBarsTask(ArrayList<Bar> bars) {
+    public GetBarsTask(ArrayList<Bar> bars, BarListAdapter adapter) {
         this.bars = bars;
+        this.adapter = adapter;
     }
 
     @Override
@@ -49,15 +51,16 @@ public class GetBarsTask extends AsyncTask<Void, Void, Void> {
                 bars.add(bar);
             }
         } catch (Exception e) {
-
+            Log.e("Exception", e.getMessage());
         }
 
-        Log.w("Bars", bars.toString());
-
-
-
-
-
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void result) {
+
+        adapter.notifyDataSetChanged();
+
     }
 }
