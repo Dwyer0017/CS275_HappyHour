@@ -40,14 +40,23 @@ public class GetBarsTask extends AsyncTask<Void, Void, Void> {
             JSONArray data = root.getJSONArray("businesses");
             for (int i = 0; i < data.length(); i++) {
                 JSONObject thisBar = data.getJSONObject(i);
-                Double distance = Double.parseDouble(thisBar.getString("distance"));
+                int distance = (int) Math.round(Double.parseDouble(thisBar.getString("distance")));
                 String name = thisBar.getString("name");
                 int rating = thisBar.getInt("rating");
                 JSONObject location = thisBar.getJSONObject("location");
-                String address = location.getString("address");
+                JSONArray temp = location.getJSONArray("address");
+                int length = temp.length();
+                String address[] = null;
+                if (length > 0) {
+                    address = new String[length];
+                    for (int j = 0; j < length; j++) {
+                        address[j] = temp.getString(j);
+                    }
+                }
                 String city = location.getString("city");
                 String state = location.getString("state_code");
-                Bar bar = new Bar(name, address, city, state, distance, rating);
+                String imageURL = thisBar.getString("image_url");
+                Bar bar = new Bar(name, address[0], city, state, distance, rating, imageURL);
                 bars.add(bar);
             }
         } catch (Exception e) {
@@ -60,6 +69,9 @@ public class GetBarsTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
 
+        // When complete, kick off a background task to gather the images for each forecast
+        //GetImageTask imageTask = new GetImageTask(adapter, bars);
+        //imageTask.execute();
         adapter.notifyDataSetChanged();
 
     }

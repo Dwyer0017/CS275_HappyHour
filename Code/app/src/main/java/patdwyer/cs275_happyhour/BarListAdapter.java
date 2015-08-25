@@ -28,14 +28,16 @@ public class BarListAdapter extends ArrayAdapter<Bar> {
         }
 
         TextView nameView = (TextView) convertView.findViewById(R.id.name);
+        //ImageView barPicView = (ImageView) convertView.findViewById(R.id.pic);
         TextView locationView = (TextView) convertView.findViewById(R.id.location);
         TextView distanceView = (TextView) convertView.findViewById(R.id.distance);
         TextView ratingView = (TextView) convertView.findViewById(R.id.rating);
 
         nameView.setText(this.getItem(position).getName());
+        //barPicView.setImageBitmap(this.getItem(position).getPic());
         locationView.setText(this.getItem(position).getAddress() + ", " + this.getItem(position).getCity() + ", " + this.getItem(position).getState());
-        distanceView.setText(Double.toString(this.getItem(position).getDistance()));
-        ratingView.setText(Integer.toString(this.getItem(position).getRating()));
+        distanceView.setText("Distance: " + Integer.toString(this.getItem(position).getDistance()) + " meters");
+        ratingView.setText("Yelp Rating: " + Integer.toString(this.getItem(position).getRating()) + "/5");
 
         return convertView;
 
