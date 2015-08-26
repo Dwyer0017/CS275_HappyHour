@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10, this);
-        //Location location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
-        locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
         ListView l = (ListView) findViewById(R.id.listView);
         l.setAdapter(adapter);
