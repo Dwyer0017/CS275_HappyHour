@@ -20,17 +20,21 @@ public class GetBarsTask extends AsyncTask<Void, Void, Void> {
 
     private ArrayList<Bar> bars;
     private BarListAdapter adapter;
+    private double lat;
+    private double lng;
 
-    public GetBarsTask(ArrayList<Bar> bars, BarListAdapter adapter) {
+    public GetBarsTask(ArrayList<Bar> bars, BarListAdapter adapter, double lat, double lng) {
         this.bars = bars;
         this.adapter = adapter;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     @Override
     protected Void doInBackground(Void... arg0) {
 
-        double lat = 39.962303;
-        double lng = -75.187476;
+        //double lat = 39.962303;
+        //double lng = -75.187476;
 
         YelpAPI yelpApi = new YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
         String response = yelpApi.searchForBusinessesByLocation("bars", lat, lng);
