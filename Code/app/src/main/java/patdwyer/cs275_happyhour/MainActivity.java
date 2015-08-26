@@ -4,8 +4,10 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -29,7 +31,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10, this);
         //Location location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
-        locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
         ListView l = (ListView) findViewById(R.id.listView);
         l.setAdapter(adapter);
 
