@@ -32,4 +32,18 @@
         android:text="rating"
         android:id="@+id/rating" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="userRating"
+        android:id="@+id/userRating" />
+
+    <SeekBar
+        android:layout_width="238dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:splitTrack="true"
+        android:progress="1"
+        android:max="5" />
+
 </LinearLayout>

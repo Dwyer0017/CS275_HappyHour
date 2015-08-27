@@ -33,8 +33,6 @@ public class GetBarsTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... arg0) {
 
-        //double lat = 39.962303;
-        //double lng = -75.187476;
 
         YelpAPI yelpApi = new YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
         String response = yelpApi.searchForBusinessesByLocation("bars", lat, lng);

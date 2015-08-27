@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.SeekBar;
 
 import java.util.ArrayList;
 
@@ -26,15 +27,19 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       adapter= new BarListAdapter(this, R.layout.list_item, bars);
+        adapter= new BarListAdapter(this, R.layout.list_item, bars);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10, this);
 
         ListView l = (ListView) findViewById(R.id.listView);
         l.setAdapter(adapter);
+        //SeekBar ratingBar = (SeekBar) findViewById(R.id.ratingBar);
 
-
+        lat = 39.962303;
+        lng = -75.187476;
+        GetBarsTask gbt = new GetBarsTask(bars, adapter, lat, lng);
+        gbt.execute();
 
     }
 

@@ -6,7 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -32,12 +35,33 @@ public class BarListAdapter extends ArrayAdapter<Bar> {
         TextView locationView = (TextView) convertView.findViewById(R.id.location);
         TextView distanceView = (TextView) convertView.findViewById(R.id.distance);
         TextView ratingView = (TextView) convertView.findViewById(R.id.rating);
+        final TextView userRatingView = (TextView) convertView.findViewById(R.id.userRating);
+        SeekBar ratingBar = (SeekBar) convertView.findViewById(R.id.ratingBar);
 
         nameView.setText(this.getItem(position).getName());
         //barPicView.setImageBitmap(this.getItem(position).getPic());
         locationView.setText(this.getItem(position).getAddress() + ", " + this.getItem(position).getCity() + ", " + this.getItem(position).getState());
         distanceView.setText("Distance: " + Integer.toString(this.getItem(position).getDistance()) + " meters");
         ratingView.setText("Yelp Rating: " + Integer.toString(this.getItem(position).getRating()) + "/5");
+        userRatingView.setText("My Rating: 0" +"/5");// TODO set database number here
+        ratingBar.setProgress(0); // TODO set slider value based off of database number here
+        ratingBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                userRatingView.setText("My Rating: " + Integer.toString(progress)+ "/5");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
 
         return convertView;
 
