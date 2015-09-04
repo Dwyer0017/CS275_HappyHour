@@ -77,9 +77,7 @@ public class GetBarsTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
 
-        // When complete, kick off a background task to gather the images for each forecast
-        //GetImageTask imageTask = new GetImageTask(adapter, bars);
-        //imageTask.execute();
+
         adapter.notifyDataSetChanged();
 
     }
