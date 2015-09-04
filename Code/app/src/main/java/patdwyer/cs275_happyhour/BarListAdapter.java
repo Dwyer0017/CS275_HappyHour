@@ -1,6 +1,7 @@
 package patdwyer.cs275_happyhour;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,14 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import patdwyer.cs275_happyhour.model.BarDatabaseHelper;
+
 /**
  * Created by patrickdwyer on 8/25/15.
  */
 public class BarListAdapter extends ArrayAdapter<Bar> {
+
+    private BarDatabaseHelper db = new BarDatabaseHelper(this.getContext());
 
     public BarListAdapter(Context context, int resource, ArrayList<Bar> bars) {
         super(context, resource, bars);
@@ -31,36 +36,32 @@ public class BarListAdapter extends ArrayAdapter<Bar> {
         }
 
         TextView nameView = (TextView) convertView.findViewById(R.id.name);
-        //ImageView barPicView = (ImageView) convertView.findViewById(R.id.pic);
         TextView locationView = (TextView) convertView.findViewById(R.id.location);
         TextView distanceView = (TextView) convertView.findViewById(R.id.distance);
         TextView ratingView = (TextView) convertView.findViewById(R.id.rating);
         final TextView userRatingView = (TextView) convertView.findViewById(R.id.userRating);
         SeekBar ratingBar = (SeekBar) convertView.findViewById(R.id.ratingBar);
 
-        nameView.setText(this.getItem(position).getName());
-        //barPicView.setImageBitmap(this.getItem(position).getPic());
+        String barName = this.getItem(position).getName();
+        nameView.setText(barName);
         locationView.setText(this.getItem(position).getAddress() + ", " + this.getItem(position).getCity() + ", " + this.getItem(position).getState());
         distanceView.setText("Distance: " + Integer.toString(this.getItem(position).getDistance()) + " meters");
         ratingView.setText("Yelp Rating: " + Integer.toString(this.getItem(position).getRating()) + "/5");
-        userRatingView.setText("My Rating: 0" +"/5");// TODO set database number here
-        ratingBar.setProgress(0); // TODO set slider value based off of database number here
-        ratingBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                userRatingView.setText("My Rating: " + Integer.toString(progress)+ "/5");
-            }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+        int rating = 0;
 
-            }
+        try {
+            rating = db.getRating(barName);
+        } catch (Exception e) {
+            Log.e("NO RECORD", e.getMessage());
+            db.createBar(this.getItem(position).getName(), rating);
+        }
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+        userRatingView.setText("My Rating: "+ rating +"/5");
 
-            }
-        });
+        ratingBar.setProgress(rating);
+        RatingBarListener listener = new RatingBarListener(barName, getContext(), db, this);
+        ratingBar.setOnSeekBarChangeListener(listener);
 
 
         return convertView;

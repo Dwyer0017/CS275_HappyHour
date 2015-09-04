@@ -34,20 +34,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
         ListView l = (ListView) findViewById(R.id.listView);
         l.setAdapter(adapter);
-        //SeekBar ratingBar = (SeekBar) findViewById(R.id.ratingBar);
 
-        lat = 39.962303;
-        lng = -75.187476;
-        GetBarsTask gbt = new GetBarsTask(bars, adapter, lat, lng);
+        double lat = 39.962303;
+        double lng = -75.187476;
+
+        GetBarsTask gbt = new GetBarsTask(bars, adapter, lat, lng, this);
         gbt.execute();
 
+
     }
+
 
     @Override
     public void onLocationChanged(Location location) {
         lat = location.getLatitude();
         lng = location.getLongitude();
-        GetBarsTask gbt = new GetBarsTask(bars, adapter, lat, lng);
+        GetBarsTask gbt = new GetBarsTask(bars, adapter, lat, lng, this);
         gbt.execute();
         locationManager.removeUpdates(this);
     }
@@ -66,4 +68,5 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
     public void onProviderDisabled(String provider) {
 
     }
+
 }

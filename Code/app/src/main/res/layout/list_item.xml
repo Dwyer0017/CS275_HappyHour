@@ -43,7 +43,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/ratingBar"
         android:splitTrack="true"
-        android:progress="1"
         android:max="5" />
 
 </LinearLayout>

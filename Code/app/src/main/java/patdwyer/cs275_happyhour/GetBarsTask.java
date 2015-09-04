@@ -1,5 +1,6 @@
 package patdwyer.cs275_happyhour;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -7,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import patdwyer.cs275_happyhour.model.BarDatabaseHelper;
 
 /**
  * Created by patrickdwyer on 8/25/15.
@@ -22,17 +25,18 @@ public class GetBarsTask extends AsyncTask<Void, Void, Void> {
     private BarListAdapter adapter;
     private double lat;
     private double lng;
+    private Context context;
 
-    public GetBarsTask(ArrayList<Bar> bars, BarListAdapter adapter, double lat, double lng) {
+    public GetBarsTask(ArrayList<Bar> bars, BarListAdapter adapter, double lat, double lng, Context context) {
         this.bars = bars;
         this.adapter = adapter;
         this.lat = lat;
         this.lng = lng;
+        this.context = context;
     }
 
     @Override
     protected Void doInBackground(Void... arg0) {
-
 
         YelpAPI yelpApi = new YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
         String response = yelpApi.searchForBusinessesByLocation("bars", lat, lng);
@@ -59,6 +63,8 @@ public class GetBarsTask extends AsyncTask<Void, Void, Void> {
                 String state = location.getString("state_code");
                 String imageURL = thisBar.getString("image_url");
                 Bar bar = new Bar(name, address[0], city, state, distance, rating, imageURL);
+
+
                 bars.add(bar);
             }
         } catch (Exception e) {
